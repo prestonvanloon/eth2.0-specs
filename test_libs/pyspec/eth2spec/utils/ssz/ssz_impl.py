@@ -41,11 +41,9 @@ def serialize(obj: SSZValue):
     if isinstance(obj, BasicValue):
         return serialize_basic(obj)
     elif isinstance(obj, Bitvector):
-        as_integer = sum([obj[i] << i for i in range(len(obj))])
-        return as_integer.to_bytes((len(obj) + 7) // 8, "little")
+        return encode_series(obj)
     elif isinstance(obj, Bitlist):
-        as_integer = sum([obj[i] << i for i in range(len(obj))])
-        return as_integer.to_bytes((len(obj) + 7) // 8, "little")
+        return encode_series(obj)
     elif isinstance(obj, Series):
         return encode_series(obj)
     else:
@@ -150,7 +148,7 @@ def hash_tree_root(obj: SSZValue):
         raise Exception(f"Type not supported: {type(obj)}")
 
     if isinstance(obj, (List, Bytes, Bitlist)):
-        return mix_in_length(merkleize_chunks(leaves, pad_to=chunk_count(obj.type())), len(obj))
+        return mix_in_length(merkleize_chunks(leaves), len(obj))
     else:
         return merkleize_chunks(leaves)
 
