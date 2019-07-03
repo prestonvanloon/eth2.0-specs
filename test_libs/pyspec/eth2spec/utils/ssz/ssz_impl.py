@@ -44,8 +44,8 @@ def serialize(obj: SSZValue):
         as_integer = sum([obj[i] << i for i in range(len(obj))])
         return as_integer.to_bytes((len(obj) + 7) // 8, "little")
     elif isinstance(obj, Bitlist):
-        as_integer = (1 << len(obj)) + sum([obj[i] << i for i in range(len(obj))])
-        return as_integer.to_bytes((as_integer.bit_length() + 7) // 8, "little")
+        as_integer = sum([obj[i] << i for i in range(len(obj))])
+        return as_integer.to_bytes((len(obj) + 7) // 8, "little")
     elif isinstance(obj, Series):
         return encode_series(obj)
     else:
