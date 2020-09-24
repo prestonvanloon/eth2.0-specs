@@ -21,6 +21,7 @@
   - [Rewards and penalties](#rewards-and-penalties)
   - [Max operations per block](#max-operations-per-block)
   - [Domain types](#domain-types)
+  - [Fork schedule](#fork-schedule)
 - [Containers](#containers)
   - [Misc dependencies](#misc-dependencies)
     - [`Fork`](#fork)
@@ -274,6 +275,12 @@ The following values are (non-configurable) constants used throughout the specif
 | `DOMAIN_VOLUNTARY_EXIT`      | `DomainType('0x04000000')` |
 | `DOMAIN_SELECTION_PROOF`     | `DomainType('0x05000000')` |
 | `DOMAIN_AGGREGATE_AND_PROOF` | `DomainType('0x06000000')` |
+
+### Fork schedule
+
+| Name | Slot | Fork |
+| - | - | - |
+| Phase 1 | `Slot(0)` **TBD** | `Fork(previous_version=GENESIS_FORK_VERSION, current_version=Version('0x01000000'), epoch=GENESIS_EPOCH)` |
 
 ## Containers
 
@@ -1245,6 +1252,9 @@ def process_slot(state: BeaconState) -> None:
     # Cache block root
     previous_block_root = hash_tree_root(state.latest_block_header)
     state.block_roots[state.slot % SLOTS_PER_HISTORICAL_ROOT] = previous_block_root
+    # Apply fork schedule
+    if FORK_SCHEDULE[state.slot] != None:
+        state.fork = FORK_SCHEDULE[state.slot]
 ```
 
 ### Epoch processing

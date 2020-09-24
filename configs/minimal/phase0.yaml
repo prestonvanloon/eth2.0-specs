@@ -154,3 +154,15 @@ DOMAIN_DEPOSIT: 0x03000000
 DOMAIN_VOLUNTARY_EXIT: 0x04000000
 DOMAIN_SELECTION_PROOF: 0x05000000
 DOMAIN_AGGREGATE_AND_PROOF: 0x06000000
+
+# Fork schedule
+# ---------------------------------------------------------------
+FORK_SCHEDULE:
+  0: # Genesis fork
+    previous_version: 0x00000001
+    current_version: 0x00000001
+    epoch: 0
+  # 0: # Phase 1 (TBD)
+  #   previous_version: 0x00000001
+  #   current_version: 0x01000001
+  #   epoch: 0 # (TBD)
